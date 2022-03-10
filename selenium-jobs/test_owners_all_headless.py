@@ -20,10 +20,10 @@ url = "http://"+APP_IP.strip()+":8080/"
 # url = "http://localhost:8080"
 print(url)
 driver.get(url)
-sleep(3)
+sleep(5)
 owners_link = driver.find_element_by_link_text("OWNERS")
 owners_link.click()
-sleep(2)
+sleep(3)
 all_link = driver.find_element_by_link_text("ALL")
 all_link.click()
 sleep(2)

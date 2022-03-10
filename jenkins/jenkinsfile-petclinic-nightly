@@ -90,8 +90,9 @@ pipeline {
                     id = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=grand-master  Name=instance-state-name,Values=running Name=tag-value,Values=${APP_STACK_NAME} --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
                     sh 'aws ec2 wait instance-status-ok --instance-ids $id'
 
-                    echo "Docker Grand Master Public Ip Address Found: $ip"
-                    env.GRAND_MASTER_PUBLIC_IP = "$ip"
+                    env.GRAND_MASTER_PUBLIC_IP = sh(script:'aws ec2 describe-instances --region ${AWS_REGION} --filters NName=tag-value,Values=grand-master  Name=instance-state-name,Values=running Name=tag-value,Values=${APP_STACK_NAME} --query Reservations[*].Instances[*].[PublicIpAddress] --output text | sed "s/\\s*None\\s*//g"', returnStdout:true).trim()
+                    echo "Docker Grand Master Public Ip Address Found: $GRAND_MASTER_PUBLIC_IP"
+                    
 
 
 
